@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<header>
+    <button><a href="{% url 'index' %}">Home</a></button>
+</header>
+<body>
+        <form method="post" class="row gx-3 gy-4" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="user" value="{{ user.username }}" id="">
+            <p>
+                <input type="text" name="name" id="">
+            </p>
+            <p>
+                <input type="number" name="price" id="">
+            </p>
+            <p>
+                <input type="file" name="image" id="">
+            </p>
+            <button type="submit">Send</button>
+        </form>
+
+    <div>
+        {% for i in product_list %}
+            {% if i.user == user %}
+                <h1>{{ i.name }}</h1>
+                <img src="{{ i.image.url }}" width="300px" alt="">
+                <p>{{ i.price }}</p>
+
+                <form action="{% url 'delete_post' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}" id="">
+                    <button type="submit" name="prod_id" value="{{ i.id }}">X</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+
+<footer>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr>
+
+    <ul>
+        <li>Phone - +9745632145</li>
+        <li>Email - Test@gmail.com</li>
+        <li>Adres - Yerevan</li>
+    </ul>
+
+</footer>
+
+</html>
